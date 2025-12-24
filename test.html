@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Y&B Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: #020617;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        #shaderCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 0;
+            touch-action: none;
+            background: black;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 20px;
+            position: relative;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .welcome-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: rgba(249, 115, 22, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(253, 186, 116, 0.3);
+            border-radius: 50px;
+            font-size: 16px;
+            color: #fdba74;
+            margin-bottom: 32px;
+            animation: fadeInDown 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #f97316;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            animation: fadeInUp 0.8s ease-out 0.2s forwards;
+            opacity: 0;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #fb923c, #fbbf24, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: rgba(253, 186, 116, 0.9);
+            max-width: 700px;
+            margin: 0 auto 48px;
+            animation: fadeInUp 0.8s ease-out 0.4s forwards;
+            opacity: 0;
+        }
+
+        .scroll-btn {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: #fb923c;
+            cursor: pointer;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            animation: fadeInUp 0.8s ease-out 0.6s forwards;
+            opacity: 0;
+        }
+
+        .scroll-btn:hover { color: #fdba74; }
+
+        .arrow-down {
+            width: 20px;
+            height: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .projects {
+            padding: 80px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #020617 100%);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: #9ca3af;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .project-card {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            border-color: rgba(251, 146, 60, 0.5);
+            transform: translateY(-4px);
+        }
+
+        .project-image {
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, #0f172a, rgba(15, 23, 42, 0.5), transparent);
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+
+        .project-card:hover .image-overlay { opacity: 1; }
+
+        .view-site-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: #f97316;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .project-card:hover .view-site-btn { opacity: 1; }
+        .view-site-btn:hover {
+            background: #ea580c;
+            transform: translate(-50%, -50%) scale(1.05);
+        }
+
+        .project-content { padding: 24px; }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .project-card:hover .project-title { color: #fb923c; }
+
+        .external-icon {
+            width: 20px;
+            height: 20px;
+            color: #9ca3af;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .project-card:hover .external-icon { opacity: 1; }
+
+        .project-description {
+            color: #9ca3af;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            padding: 6px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            font-size: 0.75rem;
+            color: #9ca3af;
+        }
+
+        .contact {
+            padding: 128px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #020617 100%);
+        }
+
+        .whatsapp-icon-circle {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #10b981, #059669);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+
+        .contact h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .contact p {
+            color: #9ca3af;
+            font-size: 1.125rem;
+            margin-bottom: 32px;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 32px;
+            background: linear-gradient(90deg, #10b981, #059669);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.125rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.25);
+        }
+
+        .whatsapp-btn:hover {
+            background: linear-gradient(90deg, #059669, #047857);
+            transform: scale(1.05);
+        }
+
+        footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 32px 20px;
+            position: relative;
+            z-index: 10;
+            background: #020617;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer-logo {
+            color: #fb923c;
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        .footer-text {
+            color: #9ca3af;
+            font-size: 0.875rem;
+        }
+
+        .icon { width: 24px; height: 24px; }
+
+        @media (min-width: 768px) {
+            h1 { font-size: 5rem; }
+            .section-header h2 { font-size: 3rem; }
+            .contact h2 { font-size: 3rem; }
+            .projects-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            h1 { font-size: 6rem; }
+            .projects-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="shaderCanvas"></canvas>
+
+    <section class="hero">
+        <div>
+            <div class="welcome-badge">
+                <div class="pulse-dot"></div>
+                Welcome to Y&B portfolio
+            </div>
+            <h1>Y&B <span class="gradient-text">Web Solution</span></h1>
+            <p>A curated collection of websites we've created. Click on any project to explore it live.</p>
+            <button class="scroll-btn" onclick="scrollToProjects()">
+                <span>View Projects</span>
+                <svg class="arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <section class="projects" id="projects">
+        <div class="section-header">
+            <h2>Featured Websites</h2>
+            <p>Explore Y&B work below. Each project is crafted with attention to detail and user experience.</p>
+        </div>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="tutconnect.png" alt="tutconnect">
+                    <div class="image-overlay"></div>
+                    <a href="https://tutconnect-ybwebsolution.netlify.app/" class="view-site-btn">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        View Site
+                    </a>
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">TUT Connect</h3>
+                        <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <p class="project-description">A student-focused web platform for TUT that helps users navigate campus easily and connect with internship opportunities.</p>
+                    <div class="project-tags">
+                        <span class="tag">Career Development</span>
+                        <span class="tag">Student Services</span>
+                        <span class="tag">EdTech</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="NW.png" alt="NW">
+                    <div class="image-overlay"></div>
+                    <a href="https://neighnourhoodwatch.netlify.app/" class="view-site-btn">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        View Site
+                    </a>
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">Neighbourhood Watch</h3>
+                        <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <p class="project-description">Neighbourhood Watch is a smart urban safety platform developed to enhance community protection and preserve city infrastructure</p>
+                    <div class="project-tags">
+                        <span class="tag">Smart City</span>
+                        <span class="tag">Public Safety</span>
+                        <span class="tag">Community Tech</span>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="localfix.png" alt="localfix Website">
+                    <div class="image-overlay"></div>
+                    <a href="https://localconnectservices.netlify.app/" class="view-site-btn">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        View Site
+                    </a>
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">LocalFix Website</h3>
+                        <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <p class="project-description">A clean marketplace platform that helps users quickly find and connect with trusted local service providers in their area.</p>
+                    <div class="project-tags">
+                        <span class="tag">Local Services</span>
+                        <span class="tag">Service Marketplace</span>
+                        <span class="tag">Community Platform</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="whatsapp-icon-circle">
+            <svg class="icon" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+        </div>
+        <h2>Have a project in mind?</h2>
+        <p>Let's discuss how we can work together</p>
+        <a href="https://wa.me/1234567890" target="_blank" class="whatsapp-btn">
+            <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+            Chat with us on WhatsApp
+        </a>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Y&B Portfolio</div>
+            <div class="footer-text">© 2025 All rights reserved. Built with passion.</div>
+            <div class="footer-text">Let's connect</div>
+        </div>
+    </footer>
+
+    <script>
+        function scrollToProjects() {
+            document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        class WebGLRenderer {
+            constructor(canvas, scale) {
+                this.canvas = canvas;
+                this.scale = scale;
+                this.gl = canvas.getContext('webgl2');
+                this.program = null;
+                this.buffer = null;
+                this.mouseMove = [0, 0];
+                this.mouseCoords = [0, 0];
+                this.pointerCoords = [0, 0];
+                this.nbrOfPointers = 0;
+                this.vertexSrc = `#version 300 es
+precision highp float;
+in vec4 position;
+void main(){gl_Position=position;}`;
+                this.vertices = [-1, 1, -1, -1, 1, 1, 1, -1];
+                this.shaderSource = `#version 300 es
+precision highp float;
+out vec4 O;
+uniform vec2 resolution;
+uniform float time;
+float rnd(vec2 p){p=fract(p*vec2(12.9898,78.233));p+=dot(p,p+34.56);return fract(p.x*p.y);}
+float noise(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);float a=rnd(i),b=rnd(i+vec2(1,0)),c=rnd(i+vec2(0,1)),d=rnd(i+1.);return mix(mix(a,b,u.x),mix(c,d,u.x),u.y);}
+float fbm(vec2 p){float t=.0,a=1.;mat2 m=mat2(1.,-.5,.2,1.2);for(int i=0;i<5;i++){t+=a*noise(p);p*=2.*m;a*=.5;}return t;}
+float clouds(vec2 p){float d=1.,t=.0;for(float i=.0;i<3.;i++){float a=d*fbm(i*10.+p.x*.2+.2*(1.+i)*p.y+d+i*i+p);t=mix(t,d,a);d=a;p*=2./(i+1.);}return t;}
+void main(){vec2 uv=(gl_FragCoord.xy-.5*resolution)/min(resolution.x,resolution.y),st=uv*vec2(2,1);vec3 col=vec3(0);float bg=clouds(vec2(st.x+time*.5,-st.y));uv*=1.-.3*(sin(time*.2)*.5+.5);for(float i=1.;i<12.;i++){uv+=.1*cos(i*vec2(.1+.01*i,.8)+i*i+time*.5+.1*uv.x);vec2 p=uv;float d=length(p);col+=.00125/d*(cos(sin(i)*vec3(1,2,3))+1.);float b=noise(i+p+bg*1.731);col+=.002*b/length(max(p,vec2(b*p.x*.02,p.y)));col=mix(col,vec3(bg*.25,bg*.137,bg*.05),d);}O=vec4(col,1);}`;
+                this.gl.viewport(0, 0, canvas.width * scale, canvas.height * scale);
+            }
+
+            compile(shader, source) {
+                this.gl.shaderSource(shader, source);
+                this.gl.compileShader(shader);
+                if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
+                    console.error('Shader error:', this.gl.getShaderInfoLog(shader));
+                }
+            }
+
+            setup() {
+                const gl = this.gl;
+                const vs = gl.createShader(gl.VERTEX_SHADER);
+                const fs = gl.createShader(gl.FRAGMENT_SHADER);
+                this.compile(vs, this.vertexSrc);
+                this.compile(fs, this.shaderSource);
+                this.program = gl.createProgram();
+                gl.attachShader(this.program, vs);
+                gl.attachShader(this.program, fs);
+                gl.linkProgram(this.program);
+                if (!gl.getProgramParameter(this.program, gl.LINK_STATUS)) {
+                    console.error(gl.getProgramInfoLog(this.program));
+                }
+            }
+
+            init() {
+                const gl = this.gl;
+                const program = this.program;
+                this.buffer = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
+                gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(this.vertices), gl.STATIC_DRAW);
+                const position = gl.getAttribLocation(program, 'position');
+                gl.enableVertexAttribArray(position);
+                gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+                program.resolution = gl.getUniformLocation(program, 'resolution');
+                program.time = gl.getUniformLocation(program, 'time');
+            }
+
+            render(now = 0) {
+                const gl = this.gl;
+                const program = this.program;
+                gl.clearColor(0, 0, 0, 1);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+                gl.useProgram(program);
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.buffer);
+                gl.uniform2f(program.resolution, this.canvas.width, this.canvas.height);
+                gl.uniform1f(program.time, now * 1e-3);
+                gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            }
+
+            updateScale(scale) {
+                this.scale = scale;
+                this.gl.viewport(0, 0, this.canvas.width * scale, this.canvas.height * scale);
+            }
+        }
+
+        const canvas = document.getElementById('shaderCanvas');
+        const dpr = Math.max(1, 0.5 * window.devicePixelRatio);
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+
+        const renderer = new WebGLRenderer(canvas, dpr);
+        renderer.setup();
+        renderer.init();
+
+        function animate(now) {
+            renderer.render(now);
+            requestAnimationFrame(animate);
+        }
+        animate(0);
+
+        window.addEventListener('resize', () => {
+            const dpr = Math.max(1, 0.5 * window.devicePixelRatio);
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            renderer.updateScale(dpr);
+        });
+    </script>
+</body>
+</html>

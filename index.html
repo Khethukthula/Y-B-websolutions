@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Index.css">
+    <title>Y&B Portfolio</title>
+    
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background"></div>
+
+    <section class="hero">
+        <div>
+            <div class="welcome-badge">
+                <div class="pulse-dot"></div>
+                Welcome to Y&B portfolio
+            </div>
+
+            <h1>Y&B <span class="gradient-text">Web Solution</span></h1>
+
+            <p>A curated collection of websites we've created. Click on any project to explore it live.</p>
+
+            <button class="scroll-btn" onclick="scrollToProjects()">
+                <span>View Projects</span>
+                <svg class="arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </button>
+        </div>
+    </section>
+
+    <section class="projects" id="projects">
+        <div class="section-header">
+            <h2>Featured Websites</h2>
+            <p>Explore Y&B work below. Each project is crafted with attention to detail and user experience.</p>
+        </div>
+
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="tutconnect.png" alt="tutconnect">
+                    <div class="image-overlay"></div>
+                    <a href="https://tut-connect.pages.dev/" class="view-site-btn">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        View Site
+                    </a>
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">TUT Connect</h3>
+                        <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <p class="project-description">A student-focused web platform for TUT that helps users navigate campus easily and connect with internship opportunities.</p>
+                    <div class="project-tags">
+                        <span class="tag">Career Development</span>
+                        <span class="tag">Student Services</span>
+                        <span class="tag">EdTech</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="NW.png" alt="NW">
+                    <div class="image-overlay"></div>
+                    <a href="https://tvh-neighbourhood-watch.pages.dev/" class="view-site-btn">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        View Site
+                    </a>
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">Neighbourhood Watch</h3>
+                        <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <p class="project-description">Neighbourhood Watch is a smart urban safety platform developed to enhance community protection and preserve city infrastructure</p>
+                    <div class="project-tags">
+                        <span class="tag">Smart City</span>
+                        <span class="tag">Public Safety</span>
+                        <span class="tag">Community Tech</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="nana4.png" alt="Nail Studio">
+                    <div class="image-overlay"></div>
+                    <a href="https://cmlies-nail-studio.pages.dev/" class="view-site-btn">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        View Site
+                    </a>
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">Cmlie's Nail Studio</h3>
+                        <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <p class="project-description">a professional establishment dedicated to providing expert manicure and pedicure services.</p>
+                    <div class="project-tags">
+                        <span class="tag">Acrylic Nails</span>
+                        <span class="tag">Nail Salon</span>
+                        <span class="tag">Nail Artistry</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="localfix.png" alt="localfix Website">
+                    <div class="image-overlay"></div>
+                    <a href="https://localfix.pages.dev/" class="view-site-btn">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        View Site
+                    </a>
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">localfix Website</h3>
+                        <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <p class="project-description">Elegant restaurant site featuring online reservations and menu browsing.</p>
+                    <div class="project-tags">
+                        <span class="tag">Local Services</span>
+                        <span class="tag">Service Marketplace</span>
+                        <span class="tag">Community Platform</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="miracleglow.png" alt="miracleglow page">
+                    <div class="image-overlay"></div>
+                    <a href="https://miracle-glow.pages.dev/" class="view-site-btn">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        View Site
+                    </a>
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">Miracle & Glow</h3>
+                        <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <p class="project-description">A soft, elegant online shop showcasing handcrafted flowers and scented candles, designed to feel warm, romantic, and premium.</p>
+                    <div class="project-tags">
+                        <span class="tag">E-commerce</span>
+                        <span class="tag">Handcrafted Products</span>
+                        <span class="tag">Floral Design</span>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800&h=600&fit=crop" alt="Blog Platform">
+                    <div class="image-overlay"></div>
+                    <a href="#" class="view-site-btn">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        View Site
+                    </a>
+                </div>
+                <div class="project-content">
+                    <div class="project-header">
+                        <h3 class="project-title">Blog Platform</h3>
+                        <svg class="external-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                    </div>
+                    <p class="project-description">Content-focused blog with beautiful typography and reading experience.</p>
+                    <div class="project-tags">
+                        <span class="tag">Blog</span>
+                        <span class="tag">Content</span>
+                        <span class="tag">Writing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact">
+        <div class="whatsapp-icon-circle">
+            <svg class="icon" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+        </div>
+
+        <h2>Have a project in mind?</h2>
+        <p>Let's discuss how we can work together</p>
+
+        <a href="https://wa.me/+27655160293" target="_blank" class="whatsapp-btn">
+            <svg class="icon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+            Chat with us on WhatsApp
+        </a>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">Y&B Portfolio</div>
+            <div class="footer-text">© 2025 All rights reserved. Built with passion.</div>
+            <div class="footer-text">Let's connect</div>
+        </div>
+    </footer>
+    <script src="Index.js"></script>
+</body>
+</html>
